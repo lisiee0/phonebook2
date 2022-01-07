@@ -33,7 +33,7 @@ public class PhonebookController extends HttpServlet {
 		
 		
 		// *포워드*
-		RequestDispatcher rd= request.getRequestDispatcher("/list.jsp");
+		RequestDispatcher rd= request.getRequestDispatcher("/WEB-INF/list.jsp");
 		rd.forward(request, response);
 	}
 
