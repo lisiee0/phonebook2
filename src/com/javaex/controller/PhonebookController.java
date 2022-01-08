@@ -49,6 +49,26 @@ public class PhonebookController extends HttpServlet {
 		}
 		else if("enroll".equals(act)) {
 			
+			System.out.println("등록");
+			
+			//파라미터 3개의 꺼내온다
+			String name = request.getParameter("name");
+			String hp = request.getParameter("hp");
+			String company = request.getParameter("company");
+			
+			//vo로만든다
+			PhoneVo pv = new PhoneVo(name, hp, company);
+			//System.out.println(personVo);
+			
+			//dao 메모리 올린다.
+			PhoneDao pDao = new PhoneDao();
+			
+			//dao.insert(vo);
+			pDao.personInsert(pv);
+			
+			//리다이렉트      (포워드X)
+			response.sendRedirect("/phonebook2/pbc?action=list");
+			
 		}
 		else {
 			System.out.println("error");
