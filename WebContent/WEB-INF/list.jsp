@@ -48,6 +48,6 @@
 	<%	
 	}
 	%>
-	<a href="">추가번호 등록</a>
+	<a href="http://localhost:8088/phonebook2/pbc?action=writeForm">추가번호 등록</a>
 </body>
 </html>
