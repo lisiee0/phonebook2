@@ -42,6 +42,10 @@
 			<td>회사(company)</td>
 			<td><%=pv.getCompany()%></td>
 		</tr>
+		<tr>
+			<td><a href="/phonebook2/pbc?action=updateForm&id=<%=pv.getPersonId()%>">수정</a></td>
+			<td><a href="/phonebook2/pbc?action=delete&id=<%=pv.getPersonId()%>">삭제</a></td>
+		</tr>
 	</table>
 	<br>
 	

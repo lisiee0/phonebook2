@@ -25,11 +25,11 @@ public class PhonebookController extends HttpServlet {
 		// System.out.println("PhonebookController");
 		
 		if("list".equals(act)) {
-			System.out.println("action=list");
+			// System.out.println("action=list");
 			PhoneDao pDao= new PhoneDao();
 			List<PhoneVo> pList= pDao.getPersonList();
 		
-			System.out.println(pList);
+			// System.out.println(pList);
 		
 			// html 과 list 섞어서 표현해야함
 			// servlet 으로는 표현이 복잡함 --> jsp 이용한다
@@ -41,27 +41,28 @@ public class PhonebookController extends HttpServlet {
 			rd.forward(request, response);
 	
 		}
+		// 전화번호 등록폼
 		else if("writeForm".equals(act)) {
-			System.out.println("전화번호 등록폼");
+			// System.out.println("전화번호 등록폼");
 			
 			RequestDispatcher rd= request.getRequestDispatcher("/WEB-INF/writeForm.jsp");
 			rd.forward(request, response);
 		}
+		// 등록
 		else if("enroll".equals(act)) {
-			
-			System.out.println("등록");
+			// System.out.println("등록");
 			
 			//파라미터 3개의 꺼내온다
-			String name = request.getParameter("name");
-			String hp = request.getParameter("hp");
-			String company = request.getParameter("company");
+			String name= request.getParameter("name");
+			String hp= request.getParameter("hp");
+			String company= request.getParameter("company");
 			
 			//vo로만든다
-			PhoneVo pv = new PhoneVo(name, hp, company);
+			PhoneVo pv= new PhoneVo(name, hp, company);
 			//System.out.println(personVo);
 			
 			//dao 메모리 올린다.
-			PhoneDao pDao = new PhoneDao();
+			PhoneDao pDao= new PhoneDao();
 			
 			//dao.insert(vo);
 			pDao.personInsert(pv);
@@ -70,6 +71,47 @@ public class PhonebookController extends HttpServlet {
 			response.sendRedirect("/phonebook2/pbc?action=list");
 			
 		}
+		// 전화번호 수정폼
+		else if("updateForm".equals(act)) {
+			// System.out.println("전화번호 수정폼");
+			
+			PhoneDao pDao= new PhoneDao();
+			
+			int id= Integer.parseInt(request.getParameter("id"));
+			PhoneVo pv= pDao.getPerson(id);
+			request.setAttribute("pv", pv);
+			
+			RequestDispatcher rd= request.getRequestDispatcher("/WEB-INF/updateForm.jsp");
+			rd.forward(request, response);		
+		}
+		// 수정
+		else if("update".equals(act)) {
+			// System.out.println("수정");
+			
+			PhoneDao pDao= new PhoneDao();
+			
+			String name= request.getParameter("name");
+			String hp= request.getParameter("hp");
+			String company= request.getParameter("company");
+			int id= Integer.parseInt(request.getParameter("id"));
+			
+			PhoneVo pv= new PhoneVo(id, name, hp, company);
+			pDao.personUpdate(pv);
+			
+			response.sendRedirect("/phonebook2/pbc?action=list");
+		}
+		// 삭제
+		else if("delete".equals(act) ) {
+			// System.out.println("삭제");
+			
+			PhoneDao pDao= new PhoneDao();
+			
+			int id= Integer.parseInt(request.getParameter("id"));
+			pDao.personDelete(id);
+			
+			response.sendRedirect("/phonebook2/pbc?action=list");	
+		}
+		
 		else {
 			System.out.println("error");
 		}
@@ -78,5 +120,4 @@ public class PhonebookController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
