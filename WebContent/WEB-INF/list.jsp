@@ -1,14 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%@ page import="java.util.List" %>
-<%@ page import="com.javaex.vo.PhoneVo" %>
-
-<%
-	// request의 attribute 영역의 리스트를 가져옴 (Dao에서 가져오는거 아님)
-	// 형 변환 필요
-	List<PhoneVo> pList= (List<PhoneVo>)request.getAttribute("pl");
-
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <!DOCTYPE html>
@@ -25,33 +16,28 @@
 	
 	<p>입력한 정보 내역입니다.</p>
 	
-	<%
-	for(PhoneVo pv: pList) {
-	%>
-	
-	<table border="1">
-		<tr>
-			<td>이름(name)</td>
-			<td><%=pv.getName()%></td>
-		</tr>
-		<tr>
-			<td>핸드폰(hp))</td>
-			<td><%=pv.getHp()%></td>
-		</tr>
-		<tr>
-			<td>회사(company)</td>
-			<td><%=pv.getCompany()%></td>
-		</tr>
-		<tr>
-			<td><a href="/phonebook2/pbc?action=updateForm&id=<%=pv.getPersonId()%>">수정</a></td>
-			<td><a href="/phonebook2/pbc?action=delete&id=<%=pv.getPersonId()%>">삭제</a></td>
-		</tr>
-	</table>
-	<br>
-	
-	<%	
-	}
-	%>
+	<c:forEach items="${requestScope.pl}" var="pl">
+		<table border="1">
+			<tr>
+				<td>이름(name)</td>
+				<td>${pl.name}</td>
+			</tr>
+			<tr>
+				<td>핸드폰(hp)</td>
+				<td>${pl.hp}</td>
+			</tr>
+			<tr>
+				<td>회사(company)</td>
+				<td>${pl.company}</td>
+			</tr>
+			<tr>
+				<td><a href="/phonebook2/pbc?action=updateForm&id=${pl.personId}}">수정</a></td>
+				<td><a href="/phonebook2/pbc?action=delete&id=${pl.personId}">삭제</a></td>
+			</tr>
+		</table>
+		<br>
+	</c:forEach>
+
 	<a href="http://localhost:8088/phonebook2/pbc?action=writeForm">추가번호 등록</a>
 </body>
 </html>
